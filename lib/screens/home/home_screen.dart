@@ -1,4 +1,11 @@
+
 import 'package:flutter/material.dart';
+
+import '../../widgets/category_card.dart';
+import '../../widgets/app_card.dart';
+import '../profile/profile_screen.dart';
+import '../leaderboard/leaderboard_screen.dart';
+import '../quiz/quiz_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String userName;
@@ -8,238 +15,275 @@ class HomeScreen extends StatelessWidget {
     required this.userName,
   });
 
-  static const Color lime = Color(0xFFB7F34A);
+  static const lime = Color(0xFFB7F34A);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFF101517),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Color(0xFFB7F34A),
-                    child: Icon(
-                      Icons.person,
-                      color: Color(0xFF172014),
-                      size: 28,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Halo, $userName!',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Siap menguji pengetahuan sepak bolamu?',
-                          style: TextStyle(
-                            color: Colors.grey.shade400,
-                            fontSize: 11,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 35),
-              const Text(
-                'WELCOME TO',
-                style: TextStyle(
-                  color: lime,
-                  fontSize: 13,
-                  letterSpacing: 3,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 5),
-              const Text(
-                'FOOTQUIZ!',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 34,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'Buktikan bahwa kamu adalah penggemar sepak bola sejati!',
-                style: TextStyle(
-                  color: Colors.grey.shade400,
-                  fontSize: 14,
-                  height: 1.5,
-                ),
-              ),
-              const SizedBox(height: 30),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: const Color(0xFF263A22),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Icon(
-                      Icons.emoji_events,
-                      color: lime,
-                      size: 38,
-                    ),
-                    const SizedBox(height: 18),
-                    const Text(
-                      'Siap untuk tantangan?',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 21,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Jawab pertanyaan, kumpulkan poin, dan jadilah legenda FootQuiz.',
-                      style: TextStyle(
-                        color: Colors.grey.shade300,
-                        fontSize: 13,
-                        height: 1.5,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 48,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Halaman kuis akan kita buat berikutnya!',
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: lime,
-                          foregroundColor: const Color(0xFF172014),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13),
-                          ),
-                        ),
-                        child: const Text(
-                          'MULAI QUIZ',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            letterSpacing: 1,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 28),
-              const Text(
-                'Pilih Kategori',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 15),
-              _categoryCard(
-                icon: Icons.public,
-                title: 'Piala Dunia',
-                subtitle: 'Uji pengetahuanmu tentang World Cup',
-              ),
-              _categoryCard(
-                icon: Icons.emoji_events_outlined,
-                title: 'Liga Champions',
-                subtitle: 'Sejarah dan fakta kompetisi Eropa',
-              ),
-              _categoryCard(
-                icon: Icons.star_outline,
-                title: 'Pemain Legendaris',
-                subtitle: 'Kenali para bintang sepak bola',
-              ),
-              _categoryCard(
-                icon: Icons.sports_soccer,
-                title: 'Sepak Bola Umum',
-                subtitle: 'Berbagai pertanyaan seputar sepak bola',
-              ),
-            ],
-          ),
+  void _startQuiz(BuildContext context, String category) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => QuizScreen(
+          category: category,
+          playerName: userName,
         ),
       ),
     );
   }
 
-  Widget _categoryCard({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(17),
-      decoration: BoxDecoration(
-        color: const Color(0xFF1B2425),
-        borderRadius: BorderRadius.circular(17),
-        border: Border.all(color: const Color(0xFF303B3C)),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: lime, size: 30),
-          const SizedBox(width: 15),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+  @override
+  Widget build(BuildContext context) {
+    final categories = [
+      {
+        'title': 'Piala Dunia',
+        'subtitle': 'Uji pengetahuan tentang World Cup',
+        'icon': Icons.public,
+      },
+      {
+        'title': 'Liga Champions',
+        'subtitle': 'Kenali sejarah kompetisi Eropa',
+        'icon': Icons.emoji_events,
+      },
+      {
+        'title': 'Pemain Legendaris',
+        'subtitle': 'Tebak pemain terbaik dunia',
+        'icon': Icons.sports_soccer,
+      },
+      {
+        'title': 'Sepak Bola Umum',
+        'subtitle': 'Uji wawasan sepak bola kamu',
+        'icon': Icons.stadium,
+      },
+    ];
+
+    return Scaffold(
+      backgroundColor: const Color(0xFF101517),
+      body: SafeArea(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final horizontalPadding =
+            constraints.maxWidth > 600 ? 40.0 : 20.0;
+
+            return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding,
+                vertical: 20,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 650),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 48,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: lime,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: const Icon(
+                              Icons.sports_soccer,
+                              color: Color(0xFF101517),
+                              size: 29,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'FootQuiz',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 19,
+                                ),
+                              ),
+                              Text(
+                                'Football Knowledge Game',
+                                style: TextStyle(
+                                  color: Colors.white54,
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          IconButton(
+                            tooltip: 'Leaderboard',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                  const LeaderboardScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.leaderboard_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: 'Profile',
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                  const ProfileScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(
+                              Icons.account_circle_outlined,
+                              color: Colors.white,
+                              size: 28,
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 32),
+
+                      Text(
+                        'Halo, $userName!',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 7),
+                      const Text(
+                        'Siap menguji pengetahuan sepak bola kamu?',
+                        style: TextStyle(
+                          color: Colors.white60,
+                          fontSize: 13,
+                        ),
+                      ),
+
+                      const SizedBox(height: 25),
+
+                      AppCard(
+                        padding: const EdgeInsets.all(22),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Row(
+                              children: [
+                                Icon(
+                                  Icons.emoji_events,
+                                  color: lime,
+                                  size: 28,
+                                ),
+                                SizedBox(width: 9),
+                                Text(
+                                  'CHALLENGE YOURSELF',
+                                  style: TextStyle(
+                                    color: lime,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 1,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 17),
+                            const Text(
+                              'Seberapa jago\nkamu tentang bola?',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 25,
+                                height: 1.3,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            const Text(
+                              'Jawab pertanyaan, kumpulkan poin, dan buktikan wawasan sepak bola kamu!',
+                              style: TextStyle(
+                                color: Colors.white60,
+                                fontSize: 12,
+                                height: 1.5,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                                onPressed: () => _startQuiz(
+                                  context,
+                                  'Semua Kategori',
+                                ),
+                                icon: const Icon(Icons.play_arrow),
+                                label: const Text('MULAI QUIZ'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: lime,
+                                  foregroundColor:
+                                  const Color(0xFF101517),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 15,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(13),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      const Text(
+                        'Pilih Kategori',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 14),
+
+                      ...categories.map((category) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12),
+                          child: CategoryCard(
+                            title: category['title'] as String,
+                            subtitle: category['subtitle'] as String,
+                            icon: category['icon'] as IconData,
+                            onTap: () => _startQuiz(
+                              context,
+                              category['title'] as String,
+                            ),
+                          ),
+                        );
+                      }),
+
+                      const SizedBox(height: 20),
+
+                      const Center(
+                        child: Text(
+                          'FOOTQUIZ • PLAY. LEARN. WIN.',
+                          style: TextStyle(
+                            color: Colors.white30,
+                            fontSize: 10,
+                            letterSpacing: 1.5,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: Colors.grey.shade400,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Icon(
-            Icons.chevron_right,
-            color: Colors.white54,
-          ),
-        ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
