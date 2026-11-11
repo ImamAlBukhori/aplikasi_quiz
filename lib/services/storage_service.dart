@@ -1,10 +1,22 @@
-
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
   static Future<SharedPreferences> get _prefs async {
     return SharedPreferences.getInstance();
+  }
+
+  // HAPUS LEADERBOARD LAMA SATU KALI
+  static Future<void> _clearOldLeaderboardOnce() async {
+    final prefs = await _prefs;
+
+    final alreadyCleared =
+        prefs.getBool('leaderboard_cleared_v1') ?? false;
+
+    if (!alreadyCleared) {
+      await prefs.remove('leaderboard');
+      await prefs.setBool('leaderboard_cleared_v1', true);
+    }
   }
 
   // DATA PROFILE
@@ -74,6 +86,8 @@ class StorageService {
     required int correct,
     required int total,
   }) async {
+    await _clearOldLeaderboardOnce();
+
     final prefs = await _prefs;
     final oldData = prefs.getString('leaderboard');
 
@@ -108,6 +122,8 @@ class StorageService {
   }
 
   static Future<List<Map<String, dynamic>>> getLeaderboard() async {
+    await _clearOldLeaderboardOnce();
+
     final prefs = await _prefs;
     final data = prefs.getString('leaderboard');
 
@@ -115,11 +131,19 @@ class StorageService {
 
     try {
       final decoded = jsonDecode(data) as List;
+
       return decoded
           .map((item) => Map<String, dynamic>.from(item as Map))
           .toList();
     } catch (_) {
       return [];
     }
+  }
+
+  // HAPUS SEMUA LEADERBOARD SECARA MANUAL
+  static Future<void> clearLeaderboard() async {
+    final prefs = await _prefs;
+    await prefs.remove('leaderboard');
+    await prefs.setBool('leaderboard_cleared_v1', true);
   }
 }

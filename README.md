@@ -1,64 +1,41 @@
-# football_quiz
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 # ⚽ FOOTBALL QUIZ
 ### Aplikasi Kuis Pengetahuan Sepak Bola Berbasis Flutter
+
+Football Quiz merupakan aplikasi kuis interaktif berbasis Flutter yang dirancang untuk menguji dan meningkatkan pengetahuan pengguna mengenai dunia sepak bola. Aplikasi ini menyediakan berbagai pertanyaan seputar sepak bola dengan tampilan menarik dan fitur interaktif.
+
+---
 
 ## 👨‍🎓 Identitas Mahasiswa
 
 | Keterangan | Informasi |
 |---|---|
-| Nama | [Nama Lengkap] |
-| NIM | [NIM] |
-| Laboratorium | [Nama Lab] |
+| Nama | Muhammad Imam Al Bukhori |
+| NIM | 241401085 |
+| Laboratorium | Lab 2 Pemrograman Mobile |
 | Program Studi | Ilmu Komputer |
 | Universitas | Universitas Sumatera Utara |
 
 ---
 
-## 📱 Informasi Aplikasi
-
-**Football Quiz** merupakan aplikasi kuis interaktif berbasis Flutter yang dirancang untuk menguji dan meningkatkan pengetahuan pengguna mengenai dunia sepak bola.
-
-Aplikasi ini memiliki tampilan yang menarik dan menyediakan berbagai fitur interaktif agar pengguna dapat bermain kuis sekaligus melihat pencapaian mereka.
-
-### Fitur-Fitur Aplikasi
+## 📱 Fitur-Fitur Aplikasi
 
 1. **Login dan Register**  
    Pengguna dapat membuat akun dan masuk ke dalam aplikasi.
 
 2. **Quiz Sepak Bola**  
-   Pengguna dapat menjawab berbagai pertanyaan seputar sepak bola.
+   Pengguna dapat menjawab berbagai pertanyaan seputar dunia sepak bola.
 
-3. **Character Selection**  
-   Pengguna dapat memilih karakter yang akan digunakan dalam aplikasi.
-
-4. **Profile**  
+3. **Profile**  
    Pengguna dapat melihat informasi profil pribadi.
 
-5. **Edit Profile**  
+4. **Edit Profile**  
    Pengguna dapat mengubah nama, memilih jenjang pendidikan (SD, SMP, SMA, Kuliah, atau Kerja), serta mengisi NIM khusus untuk mahasiswa.
 
-6. **Leaderboard / Podium**  
-   Menampilkan pencapaian atau peringkat pemain.
+5. **Leaderboard / Podium**  
+   Menampilkan peringkat pemain berdasarkan skor yang diperoleh.
 
-7. **Interactive Quiz Result**  
-   Menampilkan hasil kuis dengan tampilan interaktif dan animasi.
+6. **Interactive Quiz Result**  
+   Menampilkan hasil kuis, jumlah jawaban benar, skor, dan akurasi dengan tampilan interaktif serta animasi.
 
 ---
 
@@ -68,7 +45,9 @@ Aplikasi ini memiliki tampilan yang menarik dan menyediakan berbagai fitur inter
 - Dart
 - Visual Studio Code
 - Android Studio
-- Git & GitHub
+- Git
+- GitHub
+- Shared Preferences
 
 ---
 
@@ -77,31 +56,36 @@ Aplikasi ini memiliki tampilan yang menarik dan menyediakan berbagai fitur inter
 Berikut merupakan dokumentasi tampilan dari aplikasi Football Quiz.
 
 ### 1. Halaman Login
-![Halaman Login](screenshots/login.png)
+
+![Halaman Login](./screenshots/login.png)
 
 ### 2. Halaman Register
-![Halaman Register](screenshots/register.png)
+
+![Halaman Register](./screenshots/register.png)
 
 ### 3. Halaman Utama
-![Halaman Utama](screenshots/home.png)
 
-### 4. Halaman Pemilihan Karakter
-![Character Selection](screenshots/character.png)
+![Halaman Utama](./screenshots/home.png)
 
-### 5. Halaman Quiz
-![Halaman Quiz](screenshots/quiz.png)
+### 4. Halaman Quiz
 
-### 6. Halaman Hasil Quiz
-![Hasil Quiz](screenshots/result.png)
+![Halaman Quiz](./screenshots/quiz.png)
 
-### 7. Halaman Profile
-![Halaman Profile](screenshots/profile.png)
+### 5. Halaman Hasil Quiz
 
-### 8. Halaman Edit Profile
-![Edit Profile](screenshots/edit-profile.png)
+![Halaman Hasil Quiz](./screenshots/result.png)
 
-### 9. Halaman Leaderboard
-![Leaderboard](screenshots/leaderboard.png)
+### 6. Halaman Profile
+
+![Halaman Profile](./screenshots/profile.png)
+
+### 7. Halaman Edit Profile
+
+![Halaman Edit Profile](./screenshots/edit-profile.png)
+
+### 8. Halaman Leaderboard
+
+![Halaman Leaderboard](./screenshots/leaderboard.png)
 
 ---
 
@@ -109,50 +93,52 @@ Berikut merupakan dokumentasi tampilan dari aplikasi Football Quiz.
 
 Link Figma / Prototype:
 
-[Masukkan Link Figma atau Prototype Aplikasi di Sini]
+--
 
 ---
 
 ## 🙏 Credits dan Sumber Aset
 
-Aplikasi ini dikembangkan menggunakan Flutter dan Dart.
+Aplikasi Football Quiz dikembangkan menggunakan Flutter dan Dart dengan memanfaatkan beberapa library dan sumber daya berikut:
 
-Sumber aset yang digunakan:
-- [Cantumkan sumber ikon]
-- [Cantumkan sumber gambar atau ilustrasi]
-- [Cantumkan sumber font]
-- [Cantumkan sumber animasi atau aset tambahan]
+- **Ikon:** Flutter Material Icons
+- **Gambar atau ilustrasi:** Aset gambar yang digunakan dalam aplikasi
+- **Font:** [Google Fonts - Poppins](https://fonts.google.com/specimen/Poppins)
+- **Animasi:** [Confetti Flutter Package](https://pub.dev/packages/confetti)
+- **Local Storage:** [Shared Preferences](https://pub.dev/packages/shared_preferences)
+
+
 
 ---
 
 ## 🚀 Cara Menjalankan Aplikasi
 
-1. Clone repository ini:
+### 1. Clone Repository
 
-   ```bash
-   git clone [LINK_REPOSITORY_GITHUB]
-   ```
+```bash
+git clone [LINK_REPOSITORY_GITHUB]
+```
 
-2. Masuk ke folder project:
+### 2. Masuk ke Folder Project
 
-   ```bash
-   cd football_quiz
-   ```
+```bash
+cd football_quiz
+```
 
-3. Install dependencies:
+### 3. Install Dependencies
 
-   ```bash
-   flutter pub get
-   ```
+```bash
+flutter pub get
+```
 
-4. Jalankan aplikasi:
+### 4. Jalankan Aplikasi
 
-   ```bash
-   flutter run
-   ```
+```bash
+flutter run
+```
 
 ---
 
 ## 📌 Penutup
 
-Football Quiz merupakan aplikasi pembelajaran berbasis permainan yang bertujuan memberikan pengalaman bermain kuis sepak bola secara interaktif, menarik, dan mudah digunakan.
+Football Quiz merupakan aplikasi pembelajaran berbasis permainan yang bertujuan memberikan pengalaman bermain kuis sepak bola secara interaktif, menarik, dan mudah digunakan. Aplikasi ini diharapkan dapat menjadi sarana hiburan sekaligus meningkatkan wawasan pengguna mengenai dunia sepak bola.

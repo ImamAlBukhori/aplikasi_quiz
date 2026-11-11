@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/category_card.dart';
 import '../../widgets/app_card.dart';
 import '../profile/profile_screen.dart';
 import '../leaderboard/leaderboard_screen.dart';
 import '../quiz/quiz_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String userName;
 
   const HomeScreen({
@@ -15,7 +14,45 @@ class HomeScreen extends StatelessWidget {
     required this.userName,
   });
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   static const lime = Color(0xFFB7F34A);
+
+  late String userName;
+
+  @override
+  void initState() {
+    super.initState();
+    userName = widget.userName;
+  }
+
+  // Memuat ulang nama pengguna dari SharedPreferences.
+  Future<void> _loadUserName() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    if (!mounted) return;
+
+    setState(() {
+      userName = prefs.getString('user_name') ?? 'Football Player';
+    });
+  }
+
+  // Membuka halaman Profile dan memperbarui nama setelah kembali.
+  Future<void> _openProfile() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const ProfileScreen(),
+      ),
+    );
+
+    if (!mounted) return;
+
+    await _loadUserName();
+  }
 
   void _startQuiz(BuildContext context, String category) {
     Navigator.push(
@@ -128,15 +165,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                           IconButton(
                             tooltip: 'Profile',
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                  const ProfileScreen(),
-                                ),
-                              );
-                            },
+                            onPressed: _openProfile,
                             icon: const Icon(
                               Icons.account_circle_outlined,
                               color: Colors.white,
@@ -156,7 +185,9 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
                       const SizedBox(height: 7),
+
                       const Text(
                         'Siap menguji pengetahuan sepak bola kamu?',
                         style: TextStyle(
@@ -191,7 +222,9 @@ class HomeScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
+
                             const SizedBox(height: 17),
+
                             const Text(
                               'Seberapa jago\nkamu tentang bola?',
                               style: TextStyle(
@@ -201,7 +234,9 @@ class HomeScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+
                             const SizedBox(height: 10),
+
                             const Text(
                               'Jawab pertanyaan, kumpulkan poin, dan buktikan wawasan sepak bola kamu!',
                               style: TextStyle(
@@ -210,7 +245,9 @@ class HomeScreen extends StatelessWidget {
                                 height: 1.5,
                               ),
                             ),
+
                             const SizedBox(height: 20),
+
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton.icon(
@@ -248,6 +285,7 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+
                       const SizedBox(height: 14),
 
                       ...categories.map((category) {

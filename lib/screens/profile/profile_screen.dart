@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import 'edit_profile_screen.dart';
+import '../auth/login_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -18,6 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String nim = '';
 
   bool loading = true;
+  bool loggingOut = false;
 
   @override
   void initState() {
@@ -52,6 +55,69 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (result == true) {
       await _loadProfile();
     }
+  }
+
+  Future<void> _logout() async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1B2425),
+          title: const Text(
+            'Logout',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: const Text(
+            'Apakah kamu yakin ingin keluar dari akun FootQuiz?',
+            style: TextStyle(color: Colors.white70),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, false);
+              },
+              child: const Text(
+                'BATAL',
+                style: TextStyle(color: Colors.white60),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(dialogContext, true);
+              },
+              child: const Text(
+                'LOGOUT',
+                style: TextStyle(
+                  color: lime,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirm != true || !mounted) return;
+
+    setState(() {
+      loggingOut = true;
+    });
+
+    final prefs = await SharedPreferences.getInstance();
+
+    // Hapus status sesi saja, jangan hapus data akun.
+    await prefs.remove('is_logged_in');
+
+    if (!mounted) return;
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const LoginScreen(),
+      ),
+          (route) => false,
+    );
   }
 
   Widget _infoCard(String title, String value, IconData icon) {
@@ -116,6 +182,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 20),
+
                 Container(
                   width: 100,
                   height: 100,
@@ -129,7 +196,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     size: 55,
                   ),
                 ),
+
                 const SizedBox(height: 15),
+
                 Text(
                   name,
                   style: const TextStyle(
@@ -138,12 +207,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+
                 const SizedBox(height: 5),
+
                 Text(
                   email,
                   style: const TextStyle(color: Colors.white54),
                 ),
+
                 const SizedBox(height: 25),
+
                 SizedBox(
                   width: double.infinity,
                   height: 50,
@@ -161,28 +234,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 30),
+
                 _infoCard(
                   'Nama Lengkap',
                   name,
                   Icons.person_outline,
                 ),
+
                 _infoCard(
                   'Email',
                   email,
                   Icons.email_outlined,
                 ),
+
                 _infoCard(
                   'Jenjang Pendidikan',
                   education,
                   Icons.school_outlined,
                 ),
+
                 if (education == 'Kuliah')
                   _infoCard(
                     'NIM',
                     nim,
                     Icons.badge_outlined,
                   ),
+
+                const SizedBox(height: 25),
+
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton.icon(
+                    onPressed: loggingOut ? null : _logout,
+                    icon: const Icon(Icons.logout),
+                    label: const Text('LOGOUT'),
+                    style: OutlinedButton.styleFrom(
+                      foregroundColor: Colors.redAccent,
+                      side: const BorderSide(
+                        color: Colors.redAccent,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(14),
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
               ],
             ),
           ),

@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:confetti/confetti.dart';
-
 import '../../widgets/primary_button.dart';
 import '../home/home_screen.dart';
 import '../leaderboard/leaderboard_screen.dart';
