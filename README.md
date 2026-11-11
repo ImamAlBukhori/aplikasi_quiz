@@ -87,13 +87,6 @@ Berikut merupakan dokumentasi tampilan dari aplikasi Football Quiz.
 
 ![Halaman Leaderboard](./screenshots/leaderboard.png)
 
----
-
-## 🎨 Mockup / Prototype Aplikasi
-
-Link Figma / Prototype:
-
---
 
 ---
 
